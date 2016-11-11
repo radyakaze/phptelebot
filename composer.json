@@ -1,5 +1,5 @@
 {
-    "name": "radya/phptelebot",
+    "name": "radyakaze/phptelebot",
     "type": "framework",
     "description": "Telegram bot framework written in PHP.",
     "keywords": ["bot", "telegram"],
