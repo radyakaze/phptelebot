@@ -1,4 +1,5 @@
-# PHPTelebot - Telegram bot framework written in PHP.
+# PHPTelebot
+Telegram bot framework written in PHP
 
 ## Features
 
@@ -19,8 +20,8 @@ To install PHPTelebot with Composer, just add the following to your `composer.js
 
 ```json
 {
-    "require-dev": {
-        "radyakaze/phptelebot": "1.*"
+    "require": {
+        "radyakaze/phptelebot": ""^1.0""
     }
 }
 ```
@@ -45,7 +46,9 @@ Download the PHP library from Github, then include `PHPTelebot.php` in your scri
 require_once '/path/to/phptelebot/src/PHPTelebot.php';
 ```
 
+
 ## Usage
+
 
 ### Creating a simple bot
 ```php
@@ -73,7 +76,8 @@ $bot->cmd('/whoami|!whoami', function() {
     $userId = $message['from']['id'];
     $text = 'You are <b>'.$name.'</b> and your ID is <code>'.$userId.'</code>';
     $options = [
-        'parse_mode' => 'html'
+        'parse_mode' => 'html',
+        'reply' => true
     ];
 
     return Bot::sendMessage($text, $options);
@@ -87,7 +91,7 @@ $bot->run();
 - If you add option **reply => true**, bot will reply current message (Only work if you not set custom chat_id and reply_to_mesage_id).
 
 ## Commands
----
+
 Use `$bot->cmd(<command>, <function>)` to handle command.
 ```php
 // simple answer
@@ -117,7 +121,7 @@ $bot->cmd('/upload', function() {
 ```
 
 ## Events
----
+
 Use `$bot->on(<event>, <function>)` to handle all possible PHPTelebot events.
 
 To handle inline message, just add:
@@ -172,7 +176,7 @@ $bot->on('sticker|photo|document', function() {
 - **game** - game
 
 ## Command with custom regex *(advanced)*
----
+
 Create a command: */regex string number*
 ```php
 $bot->regex('/^\/regex (.*) ([0-9])$/i', function($matches) {
@@ -181,7 +185,7 @@ $bot->regex('/^\/regex (.*) ([0-9])$/i', function($matches) {
 ```
 
 ## Methods
-----
+
 ### PHPTelebot Methods
 ##### `cmd(<command>, <answer>)`
 Handle a command.
@@ -257,7 +261,6 @@ Use this method to set the score of the specified user in a game.
 ##### `getGameHighScores(<user id>, <options>)` [?](https://core.telegram.org/bots/api#getgamehighscores)
 Use this method to get data for high score tables.
 
-----
 ## Webhook installation
 Open via browser `https://api.telegram.org/bot<BOT TOKEN>/setWebhook?url=https://yourdomain.com/your_bot.php`
 
