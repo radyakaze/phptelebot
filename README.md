@@ -21,7 +21,7 @@ To install PHPTelebot with Composer, just add the following to your `composer.js
 ```json
 {
     "require": {
-        "radyakaze/phptelebot": ""^1.0""
+        "radyakaze/phptelebot": "^1.0"
     }
 }
 ```
