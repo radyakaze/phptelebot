@@ -228,7 +228,7 @@ class PHPTelebot
                     } else {
                         $username = '';
                     }
-                    $regex = '/^'.addcslashes($cmd, '/\+*?[^]$(){}=!<>:-').$username.'(?:\s(.*))?$/';
+                    $regex = '/^(?:'.addcslashes($cmd, '/\+*?[^]$(){}=!<>:-').')'.$username.'(?:\s(.*))?$/';
                 }
                 if ($get['message']['text'] != '*' && preg_match($regex, $get['message']['text'], $matches)) {
                     $run = true;
