@@ -189,7 +189,7 @@ class PHPTelebot
 
                     if (self::$debug) {
                         $line = "\n--------------------\n";
-                        $outputFormat = "$line \033[0;33m%s\033[0m \033[0;32m$update[update_id]\033[0m $line%s";
+                        $outputFormat = "$line %s $update[update_id] $line%s";
                         echo sprintf($outputFormat, 'Query ID :', json_encode($update));
                         echo sprintf($outputFormat, 'Response for :', isset($response) ? $response : '--NO RESPONSE--');
                     }
