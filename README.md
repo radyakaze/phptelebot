@@ -267,5 +267,3 @@ Use this method to get data for high score tables.
 
 ## Webhook installation
 Open via browser `https://api.telegram.org/bot<BOT TOKEN>/setWebhook?url=https://yourdomain.com/your_bot.php`
-
-Made with &#9829; by Radya
