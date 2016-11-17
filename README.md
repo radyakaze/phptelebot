@@ -21,7 +21,7 @@ To install PHPTelebot with Composer, just add the following to your `composer.js
 ```json
 {
     "require": {
-        "radyakaze/phptelebot": "^1.0"
+        "radyakaze/phptelebot": "*"
     }
 }
 ```
@@ -61,7 +61,7 @@ $bot = new PHPTelebot('TOKEN', 'BOT_USERNAME'); // Bot username is optional, its
 $bot->cmd('*', 'Hi, human! I am a bot.');
 
 // Simple echo command
-$bot->cmd('/echo|/say', function($text) {
+$bot->cmd('/echo|/say', function ($text) {
     if ($text == '') {
         $text = 'Command usage: /echo [text] or /say [text]';
     }
@@ -69,7 +69,7 @@ $bot->cmd('/echo|/say', function($text) {
 });
 
 // Simple whoami command
-$bot->cmd('/whoami|!whoami', function() {
+$bot->cmd('/whoami|!whoami', function () {
     // Get message properties
     $message = Bot::message();
     $name = $message['from']['first_name'];
@@ -85,10 +85,13 @@ $bot->cmd('/whoami|!whoami', function() {
 
 $bot->run();
 ```
+Then run ```shell php file.php``` [Webhook installation](#webhook-installation)
+You can also see my other [sample](https://github.com/radyakaze/phptelebot/blob/master/sample.php).
+
 *NOTE:*
 - If function parameters is more than one, PHPTelebot will split text by space.
-- If you not set chat_id on options bot will send message to current chat.
-- If you add option **reply => true**, bot will reply current message (Only work if you not set custom chat_id and reply_to_mesage_id).
+- If you don't set chat_id on options bot will send message to current chat.
+- If you add option **reply => true**, bot will reply current message (Only work if you don't set custom chat_id and reply_to_mesage_id).
 
 ## Commands
 
@@ -98,7 +101,7 @@ Use `$bot->cmd(<command>, <function>)` to handle command.
 $bot->cmd('*', 'I am a bot');
 
 // catch multiple commands
-$bot->cmd('/start|/help', function() {
+$bot->cmd('/start|/help', function () {
    // Do something here.
 });
 
@@ -114,7 +117,7 @@ Use **&#42;** to catch any command.
 This code will send a photo to users when type command **/upload**.
 ```php
 // Simple photo upload
-$bot->cmd('/upload', function() {
+$bot->cmd('/upload', function () {
     $file = '/path/to/photo.png'; // File path, file id, or url.
     return Bot::sendPhoto($file);
 });
@@ -194,7 +197,7 @@ Handles events.
 ##### `regex(<regex>, <answer>)`
 Create custom regex for command.
 ##### `Bot::type()`
-Return [message event](#telegram-message-events) type.
+Return [message event](#message-events) type.
 ##### `Bot::message()`
 Get [message properties](https://core.telegram.org/bots/api#message).
 
@@ -234,36 +237,34 @@ Use this method to get basic info about a file and prepare it for downloading. F
 Use this method to send answers to an inline query.
 ##### `Bot::answerCallbackQuery(<text>, <options>)` [?](https://core.telegram.org/bots/api#answercallbackquery)
 Use this method to send answers to callback queries sent from inline keyboards.
-##### `getChat(<chat_id>)` [?](https://core.telegram.org/bots/api#getchat)
+##### `Bot::getChat(<chat_id>)` [?](https://core.telegram.org/bots/api#getchat)
 Use this method to get up to date information about the chat.
-##### `leaveChat(<chat_id>)` [?](https://core.telegram.org/bots/api#leavechat)
+##### `Bot::leaveChat(<chat_id>)` [?](https://core.telegram.org/bots/api#leavechat)
 Use this method for your bot to leave a group, supergroup or channel.
-##### `getChatAdministrators(<chat_id>)` [?](https://core.telegram.org/bots/api#getchatadministrators)
+##### `Bot::getChatAdministrators(<chat_id>)` [?](https://core.telegram.org/bots/api#getchatadministrators)
 Use this method to get a list of administrators in a chat.
-##### `getChatMembersCount(<chat_id>)` [?](https://core.telegram.org/bots/api#getchatmemberscount)
+##### `Bot::getChatMembersCount(<chat_id>)` [?](https://core.telegram.org/bots/api#getchatmemberscount)
 Use this method to get the number of members in a chat.
-##### `getChatMember(<options>)` [?](https://core.telegram.org/bots/api#getchatmember)
+##### `Bot::getChatMember(<options>)` [?](https://core.telegram.org/bots/api#getchatmember)
 Use this method to get information about a member of a chat.
-##### `kickChatMember(<options>)` [?](https://core.telegram.org/bots/api#kickchatmember)
+##### `Bot::kickChatMember(<options>)` [?](https://core.telegram.org/bots/api#kickchatmember)
 Use this method to kick a user from a group or a supergroup.
-##### `unbanChatMember(<options>)` [?](https://core.telegram.org/bots/api#unbanchatmember)
+##### `Bot::unbanChatMember(<options>)` [?](https://core.telegram.org/bots/api#unbanchatmember)
 Use this method to unban a previously kicked user in a supergroup.
-##### `editMessageText(<options>)` [?](https://core.telegram.org/bots/api#editmessagetext)
+##### `Bot::editMessageText(<options>)` [?](https://core.telegram.org/bots/api#editmessagetext)
 Use this method to edit text messages sent by the bot or via the bot (for inline bots).
-##### `editMessageCaption(<options>)` [?](https://core.telegram.org/bots/api#editmessagecaption)
+##### `Bot::editMessageCaption(<options>)` [?](https://core.telegram.org/bots/api#editmessagecaption)
 Use this method to edit captions of messages sent by the bot or via the bot (for inline bots).
-##### `editMessageReplyMarkup(<options>)` [?](https://core.telegram.org/bots/api#editmessagereplymarkup)
+##### `Bot::editMessageReplyMarkup(<options>)` [?](https://core.telegram.org/bots/api#editmessagereplymarkup)
 Use this method to edit only the reply markup of messages sent by the bot or via the bot (for inline bots).
-#####  `sendGame(<game short name>, <options>)` [?](https://core.telegram.org/bots/api#sendgame)
+#####  `Bot::sendGame(<game short name>, <options>)` [?](https://core.telegram.org/bots/api#sendgame)
 Use this method to send a game.
-##### `setGameScore(<options>)` [?](https://core.telegram.org/bots/api#setgamescore)
+##### `Bot::setGameScore(<options>)` [?](https://core.telegram.org/bots/api#setgamescore)
 Use this method to set the score of the specified user in a game.
-##### `getGameHighScores(<user id>, <options>)` [?](https://core.telegram.org/bots/api#getgamehighscores)
+##### `Bot::getGameHighScores(<user id>, <options>)` [?](https://core.telegram.org/bots/api#getgamehighscores)
 Use this method to get data for high score tables.
 
 ## Webhook installation
 Open via browser `https://api.telegram.org/bot<BOT TOKEN>/setWebhook?url=https://yourdomain.com/your_bot.php`
-
-----
 
 Made with &#9829; by Radya

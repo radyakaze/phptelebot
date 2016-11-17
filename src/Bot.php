@@ -1,10 +1,17 @@
 <?php
-/*!
- * PHPTelebot
- * Version 1.0
+/**
+ * Bot.php.
  *
- * Copyright 2016, Radya
- * Released under the GPL-3.0
+ *
+ * @author Radya <radya@gmx.com>
+ *
+ * @link https://github.com/radyakaze/phptelebot
+ *
+ * @license GPL-3.0
+ */
+
+/**
+ * Class Bot.
  */
 class Bot
 {
@@ -12,11 +19,11 @@ class Bot
      * Send request to telegram api server.
      *
      * @param string $action
-     * @param array  $data [optional]
+     * @param array  $data   [optional]
      *
      * @return array|bool
      */
-    public static function send($action = 'sendMessage', $data = [])
+    public static function send(string $action = 'sendMessage', array $data = [])
     {
         $upload = false;
         $actionUpload = ['sendPhoto', 'sendAudio', 'sendDocument', 'sendSticker', 'sendVideo', 'sendVoice'];
@@ -44,11 +51,17 @@ class Bot
             }
         }
 
+        if (isset($data['reply_markup']) && is_array($data['reply_markup'])) {
+            $data['reply_markup'] = json_encode($data['reply_markup']);
+        }
+
         $ch = curl_init();
         $options = [
             CURLOPT_URL => 'https://api.telegram.org/bot'.PHPTelebot::$token.'/'.$action,
             CURLOPT_POST => true,
-            CURLOPT_RETURNTRANSFER => true
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
         ];
 
         if (is_array($data)) {
@@ -71,6 +84,7 @@ class Bot
 
         if ($httpcode == 401) {
             throw new Exception('Incorect bot token');
+
             return false;
         } else {
             return $result;
@@ -80,11 +94,12 @@ class Bot
     /**
      * Answer Inline.
      *
-     * @param array $options [optional]
+     * @param array $results
+     * @param array $options
      *
      * @return string
      */
-    public static function answerInlineQuery($results, $options = [])
+    public static function answerInlineQuery(array $results, array $options = [])
     {
         if (!empty($options)) {
             $data = $options;
@@ -103,11 +118,12 @@ class Bot
     /**
      * Answer Callback.
      *
-     * @param array $data
+     * @param string $text
+     * @param array  $options [optional]
      *
      * @return string
      */
-    public static function answerCallbackQuery($text = '', $options = [])
+    public static function answerCallbackQuery(string $text, array $options = [])
     {
         $options['text'] = $text;
 
@@ -139,6 +155,8 @@ class Bot
     }
 
     /**
+     * Get message properties.
+     *
      * @return array
      */
     public static function message()
@@ -163,7 +181,7 @@ class Bot
     public static function type()
     {
         $getUpdates = PHPTelebot::$getUpdates;
-        
+
         if (isset($getUpdates['message']['text'])) {
             return 'text';
         } elseif (isset($getUpdates['message']['photo'])) {
@@ -207,7 +225,7 @@ class Bot
         } elseif (isset($getUpdates['message']['migrate_from_chat_id '])) {
             return 'migrate_from_chat_id ';
         } elseif (isset($getUpdates['edited_message'])) {
-            return 'edited_message';
+            return 'edited';
         } elseif (isset($getUpdates['message']['game'])) {
             return 'game';
         } else {
@@ -244,7 +262,7 @@ class Bot
             'getChatAdministrators' => 'chat_id',
             'getChatMembersCount' => 'chat_id',
             'sendGame' => 'game_short_name',
-            'getGameHighScores' => 'user_id'
+            'getGameHighScores' => 'user_id',
         ];
 
         if (!isset($firstParam[$action])) {

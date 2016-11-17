@@ -1,10 +1,17 @@
 <?php
-/*!
- * PHPTelebot
- * Version 1.0
+/**
+ * PHPTelebot.php.
  *
- * Copyright 2016, Radya
- * Released under the GPL-3.0
+ *
+ * @author Radya <radya@gmx.com>
+ *
+ * @link https://github.com/radyakaze/phptelebot
+ *
+ * @license GPL-3.0
+ */
+
+/**
+ * Class PHPTelebot.
  */
 class PHPTelebot
 {
@@ -34,37 +41,41 @@ class PHPTelebot
     protected static $username = '';
 
     /**
-     * @var boolen
+     * Debug.
+     *
+     * @var bool
      */
     protected static $debug = true;
 
     /**
+     * PHPTelebot version.
+     *
      * @var string
      */
-    protected static $version = '1.0';
+    protected static $version = '1.1';
 
     /**
      * PHPTelebot Constructor.
      *
-     * @param string $token    [bot token]
-     * @param string $username [bot username]
+     * @param string $token
+     * @param string $username
      */
-    public function __construct($token = '', $username = '')
+    public function __construct(string $token, string $username = '')
     {
         // Check php version
         if (version_compare(phpversion(), '5.4', '<')) {
-            die("Php version isn't high enough.\n");
+            die("PHPTelebot needs to use PHP 5.4 or higher.\n");
         }
 
         // Check curl
         if (!function_exists('curl_version')) {
-            die("cURL is NOT installed on this server.");
+            die("cURL is NOT installed on this server.\n");
         }
 
         // Check bot token
         if (empty($token)) {
             die("Bot token should not be empty!\n");
-        } 
+        }
 
         self::$token = $token;
         self::$username = $username;
@@ -73,54 +84,42 @@ class PHPTelebot
     /**
      * Command.
      *
-     * @param string        $paterns
-     * @param object|string $callback
-     *
-     * @return bool
+     * @param string          $command
+     * @param callable|string $answer
      */
-    public function cmd($paterns, $callback)
+    public function cmd(string $command, $answer)
     {
-        if ($paterns != '*') {
-            $this->_command[$paterns] = $callback;
+        if ($command != '*') {
+            $this->_command[$command] = $answer;
         }
 
-        if (strrpos($paterns, '*') !== false) {
-            $this->_onMessage['text'] = $callback;
+        if (strrpos($command, '*') !== false) {
+            $this->_onMessage['text'] = $answer;
         }
-
-        return true;
     }
     /**
-     * Type.
+     * Events.
      *
-     * @param string        $paterns
-     * @param object|string $callback
-     *
-     * @return bool
+     * @param string          $types
+     * @param callable|string $answer
      */
-    public function on($types, $callback)
+    public function on(string $types, $answer)
     {
         $types = explode('|', $types);
         foreach ($types as $type) {
-            $this->_onMessage[$type] = $callback;
+            $this->_onMessage[$type] = $answer;
         }
-
-        return true;
     }
 
     /**
      * Custom regex for command.
      *
-     * @param string        $regex
-     * @param object|string $callback
-     *
-     * @return bool
+     * @param string          $regex
+     * @param callable|string $answer
      */
-    public function regex($regex, $callback)
+    public function regex(string $regex, $answer)
     {
-        $this->_command['customRegex:'.$regex] = $callback;
-
-        return true;
+        $this->_command['customRegex:'.$regex] = $answer;
     }
 
     /**
@@ -153,7 +152,7 @@ class PHPTelebot
     }
 
     /**
-     * Webhook.
+     * Webhook Mode.
      */
     private function webhook()
     {
@@ -167,6 +166,8 @@ class PHPTelebot
 
     /**
      * Long Poll Mode.
+     *
+     * @throws Exception
      */
     private function longPoll()
     {
@@ -211,9 +212,9 @@ class PHPTelebot
     {
         $get = self::$getUpdates;
         $run = false;
-        $customRegex = false;
 
         if (Bot::type() == 'text') {
+            $customRegex = false;
             foreach ($this->_command as $cmd => $call) {
                 if (substr($cmd, 0, 12) == 'customRegex:') {
                     $regex = substr($cmd, 12);

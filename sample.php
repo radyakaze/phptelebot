@@ -8,7 +8,7 @@ $bot = new PHPTelebot('TOKEN', 'BOT_USERNAME');
 $bot->cmd('*', 'Hi, human! I am a bot.');
 
 // Simple echo command
-$bot->cmd('/echo|/say', function($text) {
+$bot->cmd('/echo|/say', function ($text) {
     if ($text == '') {
         $text = 'Command usage: /echo [text] or /say [text]';
     }
@@ -17,7 +17,7 @@ $bot->cmd('/echo|/say', function($text) {
 });
 
 // Simple whoami command
-$bot->cmd('/whoami', function() {
+$bot->cmd('/whoami', function () {
     // Get message properties
     $message = Bot::message();
     $name = $message['from']['first_name'];
@@ -25,14 +25,14 @@ $bot->cmd('/whoami', function() {
     $text = 'You are <b>'.$name.'</b> and your ID is <code>'.$userId.'</code>';
     $options = [
         'parse_mode' => 'html',
-        'reply' => true
+        'reply' => true,
     ];
 
     return Bot::sendMessage($text, $options);
 });
 
 // slice text by space
-$bot->cmd('/split', function($one, $two, $three) {
+$bot->cmd('/split', function ($one, $two, $three) {
     $text = "First word: $one\n";
     $text .= "Second word: $two\n";
     $text .= "Third word: $three";
@@ -41,18 +41,32 @@ $bot->cmd('/split', function($one, $two, $three) {
 });
 
 // simple file upload
-$bot->cmd('/upload', function() {
-    $file = 'http://www.petsftw.com/wp-content/uploads/2016/03/cutecat.jpg';
-    return Bot::sendPhoto($file);
+$bot->cmd('/upload', function () {
+    $file = './composer.json';
+
+    return Bot::sendDocument($file);
+});
+
+// inline keyboard
+$bot->cmd('/keyboard', function () {
+    $keyboard[] = [
+        ['text' => 'PHPTelebot', 'url' => 'https://github.com/radyakaze/phptelebot'],
+        ['text' => 'Haru bot', 'url' => 'https://telegram.me/harubot'],
+    ];
+    $options = [
+        'reply_markup' => ['inline_keyboard' => $keyboard],
+    ];
+
+    return Bot::sendMessage('Inline keyboard', $options);
 });
 
 // custom regex
-$bot->regex('/\/number ([0-9]+)/i', function($matches) {
+$bot->regex('/\/number ([0-9]+)/i', function ($matches) {
     return Bot::sendMessage($matches[1]);
 });
 
 // Inline
-$bot->on('inline', function($text) {
+$bot->on('inline', function ($text) {
     $results[] = [
         'type' => 'article',
         'id' => 'unique_id1',
