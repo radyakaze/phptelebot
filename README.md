@@ -85,7 +85,8 @@ $bot->cmd('/whoami|!whoami', function () {
 
 $bot->run();
 ```
-Then run ```shell php file.php``` [Webhook installation](#webhook-installation)
+Then run ```shell php file.php```
+
 You can also see my other [sample](https://github.com/radyakaze/phptelebot/blob/master/sample.php).
 
 *NOTE:*
