@@ -60,7 +60,7 @@ class PHPTelebot
      * @param string $token
      * @param string $username
      */
-    public function __construct(string $token, string $username = '')
+    public function __construct($token, $username = '')
     {
         // Check php version
         if (version_compare(phpversion(), '5.4', '<')) {
@@ -87,7 +87,7 @@ class PHPTelebot
      * @param string          $command
      * @param callable|string $answer
      */
-    public function cmd(string $command, $answer)
+    public function cmd($command, $answer)
     {
         if ($command != '*') {
             $this->_command[$command] = $answer;
@@ -103,7 +103,7 @@ class PHPTelebot
      * @param string          $types
      * @param callable|string $answer
      */
-    public function on(string $types, $answer)
+    public function on($types, $answer)
     {
         $types = explode('|', $types);
         foreach ($types as $type) {
@@ -117,7 +117,7 @@ class PHPTelebot
      * @param string          $regex
      * @param callable|string $answer
      */
-    public function regex(string $regex, $answer)
+    public function regex($regex, $answer)
     {
         $this->_command['customRegex:'.$regex] = $answer;
     }

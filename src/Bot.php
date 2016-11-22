@@ -23,7 +23,7 @@ class Bot
      *
      * @return array|bool
      */
-    public static function send(string $action = 'sendMessage', array $data = [])
+    public static function send($action = 'sendMessage', $data = [])
     {
         $upload = false;
         $actionUpload = ['sendPhoto', 'sendAudio', 'sendDocument', 'sendSticker', 'sendVideo', 'sendVoice'];
@@ -99,7 +99,7 @@ class Bot
      *
      * @return string
      */
-    public static function answerInlineQuery(array $results, array $options = [])
+    public static function answerInlineQuery($results, $options = [])
     {
         if (!empty($options)) {
             $data = $options;
@@ -123,7 +123,7 @@ class Bot
      *
      * @return string
      */
-    public static function answerCallbackQuery(string $text, array $options = [])
+    public static function answerCallbackQuery($text, $options = [])
     {
         $options['text'] = $text;
 
