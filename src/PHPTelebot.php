@@ -45,14 +45,14 @@ class PHPTelebot
      *
      * @var bool
      */
-    protected static $debug = true;
+    public static $debug = true;
 
     /**
      * PHPTelebot version.
      *
      * @var string
      */
-    protected static $version = '1.1';
+    protected static $version = '1.3';
 
     /**
      * PHPTelebot Constructor.
@@ -186,9 +186,12 @@ class PHPTelebot
             if (!empty($req['result'])) {
                 foreach ($req['result'] as $update) {
                     self::$getUpdates = $update;
-                    $response = $this->process();
+                    $process = $this->process();
 
                     if (self::$debug) {
+                        $response = Bot::$debug?: $process;
+                        // reset debug
+                        Bot::$debug = '';
                         $line = "\n--------------------\n";
                         $outputFormat = "$line %s $update[update_id] $line%s";
                         echo sprintf($outputFormat, 'Query ID :', json_encode($update));

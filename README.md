@@ -181,6 +181,8 @@ $bot->on('sticker|photo|document', function() {
 - **inline** - inline message
 - **callback** - callback message
 - **game** - game
+- **channel** - channel
+- **edited_channel** - edited channel post
 
 ## Command with custom regex *(advanced)*
 
@@ -201,7 +203,7 @@ Handles events.
 ##### `regex(<regex>, <answer>)`
 Create custom regex for command.
 ##### `Bot::type()`
-Return [message event](#message-events) type.
+Return [message event](#supported-events) type.
 ##### `Bot::message()`
 Get [message properties](https://core.telegram.org/bots/api#message).
 

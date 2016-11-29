@@ -23,6 +23,13 @@ class Bot
      *
      * @return array|bool
      */
+    
+    /**
+     * Bot debug
+     * @var array
+     */
+    public static $debug = '';
+
     public static function send($action = 'sendMessage', $data = [])
     {
         $upload = false;
@@ -81,6 +88,12 @@ class Bot
         }
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+
+        if (PHPTelebot::$debug && $action != 'getUpdates') {
+            self::$debug .= 'Method: '.$action."\n";
+            self::$debug .= 'Data: '.str_replace("Array\n", '', print_r($data, true))."\n";
+            self::$debug .= 'Response: '.$result."\n";
+        }
 
         if ($httpcode == 401) {
             throw new Exception('Incorect bot token');
@@ -170,6 +183,12 @@ class Bot
             return $get['inline_query'];
         } elseif (isset($get['edited_message'])) {
             return $get['edited_message'];
+        } elseif (isset($get['channel_post'])) {
+            return $get['channel_post'];
+        } elseif (isset($get['edited_channel_post'])) {
+            return $get['edited_channel_post'];
+        } else {
+            return [];
         }
     }
 
@@ -228,6 +247,10 @@ class Bot
             return 'edited';
         } elseif (isset($getUpdates['message']['game'])) {
             return 'game';
+        } elseif (isset($getUpdates['channel_post'])) {
+            return 'channel';
+        } elseif (isset($getUpdates['edited_channel_post'])) {
+            return 'edited_channel';
         } else {
             return 'unknown';
         }
