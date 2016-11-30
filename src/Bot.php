@@ -16,6 +16,13 @@
 class Bot
 {
     /**
+     * Bot response debug.
+     * 
+     * @var string
+     */
+    public static $debug = '';
+
+    /**
      * Send request to telegram api server.
      *
      * @param string $action
@@ -23,13 +30,6 @@ class Bot
      *
      * @return array|bool
      */
-    
-    /**
-     * Bot debug
-     * @var array
-     */
-    public static $debug = '';
-
     public static function send($action = 'sendMessage', $data = [])
     {
         $upload = false;
