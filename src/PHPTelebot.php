@@ -227,12 +227,7 @@ class PHPTelebot
                      }
                     $customRegex = true;
                 } else {
-                    if (self::$username != '') {
-                        $username = '(?:@'.self::$username.')?';
-                    } else {
-                        $username = '';
-                    }
-                    $regex = '/^(?:'.addcslashes($cmd, '/\+*?[^]$(){}=!<>:-').')'.$username.'(?:\s(.*))?$/';
+                    $regex = '/^(?:'.addcslashes($cmd, '/\+*?[^]$(){}=!<>:-').')'.(self::$username ? '(?:@'.self::$username.')?' : '').'(?:\s(.*))?$/';
                 }
                 if ($get['message']['text'] != '*' && preg_match($regex, $get['message']['text'], $matches)) {
                     $run = true;
