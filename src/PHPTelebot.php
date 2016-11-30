@@ -160,6 +160,7 @@ class PHPTelebot
             self::$getUpdates = json_decode(file_get_contents('php://input'), true);
             echo $this->process();
         } else {
+            http_response_code(400);
             throw new Exception('Access not allowed!');
         }
     }
