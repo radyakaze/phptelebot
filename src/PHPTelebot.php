@@ -189,13 +189,12 @@ class PHPTelebot
                     $process = $this->process();
 
                     if (self::$debug) {
-                        $response = Bot::$debug?: $process;
-                        // reset debug
-                        Bot::$debug = '';
                         $line = "\n--------------------\n";
                         $outputFormat = "$line %s $update[update_id] $line%s";
                         echo sprintf($outputFormat, 'Query ID :', json_encode($update));
-                        echo sprintf($outputFormat, 'Response for :', isset($response) ? $response : '--NO RESPONSE--');
+                        echo sprintf($outputFormat, 'Response for :', Bot::$debug?: $process ?: '--NO RESPONSE--');
+                        // reset debug
+                        Bot::$debug = '';
                     }
                     $offset = $update['update_id'] + 1;
                 }
