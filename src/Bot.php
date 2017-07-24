@@ -48,7 +48,7 @@ class Bot
         if (in_array($action, $needChatId) && !isset($data['chat_id'])) {
             $getUpdates = PHPTelebot::$getUpdates;
             if (isset($getUpdates['callback_query'])) {
-                $getUpdates['callback_query'];
+                $getUpdates = $getUpdates['callback_query'];
             }
             $data['chat_id'] = $getUpdates['message']['chat']['id'];
             // Reply message
