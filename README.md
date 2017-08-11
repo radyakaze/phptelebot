@@ -233,7 +233,7 @@ Use this method to send point on the map.
 Use this method to send information about a venue.
 ##### `Bot::sendContact(<options>)` [?](https://core.telegram.org/bots/api#sendcontact)
 Use this method to send phone contacts.
-##### `Bot::sendAction(<action>, <options>)` [?](https://core.telegram.org/bots/api#sendchataction)
+##### `Bot::sendChatAction(<action>, <options>)` [?](https://core.telegram.org/bots/api#sendchataction)
 Use this method when you need to tell the user that something is happening on the bot's side.
 ##### `Bot::getUserProfilePhotos(<user id>, <options>)` [?](https://core.telegram.org/bots/api#getuserprofilephotos)
 Use this method to get a list of profile pictures for a user.
