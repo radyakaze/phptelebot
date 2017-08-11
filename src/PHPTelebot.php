@@ -216,6 +216,10 @@ class PHPTelebot
         $get = self::$getUpdates;
         $run = false;
 
+        if (isset($get['message']['date']) && $get['message']['date'] < (time() - 120)) {
+            return '-- Pass --';
+        }
+
         if (Bot::type() == 'text') {
             $customRegex = false;
             foreach ($this->_command as $cmd => $call) {
