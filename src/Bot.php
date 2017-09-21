@@ -213,6 +213,8 @@ class Bot
             return 'voice';
         } elseif (isset($getUpdates['message']['document'])) {
             return 'document';
+        } elseif (isset($getUpdates['message']['contact'])) {
+            return 'contact';
         } elseif (isset($getUpdates['message']['sticker'])) {
             return 'sticker';
         } elseif (isset($getUpdates['message']['venue'])) {
