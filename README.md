@@ -35,7 +35,7 @@ composer require radyakaze/phptelebot
 Composer installs autoloader at `./vendor/autoloader.php`. to include the library in your script, add:
 
 ```php
-require_once 'vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 ```
 
 ### Install from source
