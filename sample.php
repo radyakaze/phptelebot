@@ -80,4 +80,20 @@ $bot->on('inline', function ($text) {
     return Bot::answerInlineQuery($results, $options);
 });
 
+//simple promote command
+$bot->cmd('/promote|!promote', function ($id) {
+
+    $options = [
+        'chat_id' => '@TeleBotTester',
+        'user_id' => $id,
+        'can_delete_messages' => true,
+        'can_invite_users' => true,
+        'can_pin_messages' => true,
+        'can_restrict_members' => true
+    ];
+
+    $result = Bot::promoteChatMember($options);
+    return Bot::sendMessage($result);
+});
+
 $bot->run();
