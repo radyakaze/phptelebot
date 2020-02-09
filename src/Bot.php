@@ -94,13 +94,22 @@ class Bot
             self::$debug .= 'Data: '.str_replace("Array\n", '', print_r($data, true))."\n";
             self::$debug .= 'Response: '.$result."\n";
         }
-
+        $request_payload = json_decode($result);
+        if ($request_payload === null && json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception('Error while parsing json');
+        }
+        
         if ($httpcode == 401) {
             throw new Exception('Incorect bot token');
 
             return false;
         } else {
-            return $result;
+            if (!$request_payload->ok) {
+                throw new Exception($request_payload->description, $request_payload->error_code);
+                return false;
+            } else {
+                return $result;
+            }
         }
     }
 
