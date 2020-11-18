@@ -79,8 +79,7 @@ class Bot
             $options[CURLOPT_HTTPHEADER] = array('Content-Type: multipart/form-data');
         }
 
-        curl_setopt_array($ch, $options);update
-Loading composer repositories with package information 
+        curl_setopt_array($ch, $options);
 
         $result = curl_exec($ch);
 
