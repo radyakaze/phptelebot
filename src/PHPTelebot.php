@@ -18,15 +18,15 @@ class PHPTelebot
     /**
      * @var array
      */
-    public static $getUpdates = [];
+    public static $getUpdates = array();
     /**
      * @var array
      */
-    protected $_command = [];
+    protected $_command = array();
     /**
      * @var array
      */
-    protected $_onMessage = [];
+    protected $_onMessage = array();
     /**
      * Bot token.
      *
@@ -52,7 +52,7 @@ class PHPTelebot
      *
      * @var string
      */
-    protected static $version = '1.3';
+    protected static $version = '1.3.1';
 
     /**
      * PHPTelebot Constructor.
