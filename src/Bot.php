@@ -79,7 +79,8 @@ class Bot
             $options[CURLOPT_HTTPHEADER] = array('Content-Type: multipart/form-data');
         }
 
-        curl_setopt_array($ch, $options);
+        curl_setopt_array($ch, $options);update
+Loading composer repositories with package information 
 
         $result = curl_exec($ch);
 
@@ -299,6 +300,6 @@ class Bot
             }
         }
 
-        return call_user_func_array('self::send', [$action, $param]);
+        return call_user_func_array('self::send', array($action, $param));
     }
 }
