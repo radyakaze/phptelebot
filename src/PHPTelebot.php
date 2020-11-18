@@ -263,7 +263,7 @@ class PHPTelebot
                         $param = $get['inline_query']['query'];
                     break;
                     case 'location':
-                        $param = [$get['message']['location']['longitude'], $get['message']['location']['latitude']];
+                        $param = array($get['message']['location']['longitude'], $get['message']['location']['latitude']);
                     break;
                     case 'text':
                         $param = $get['message']['text'];
