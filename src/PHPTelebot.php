@@ -133,7 +133,7 @@ class PHPTelebot
             if (php_sapi_name() == 'cli') {
                 echo 'PHPTelebot version '.self::$version;
                 echo "\nMode\t: Long Polling\n";
-                $options = getopt('q', ['quiet']);
+                $options = getopt('q', array('quiet'));
                 if (isset($options['q']) || isset($options['quiet'])) {
                     self::$debug = false;
                 }
@@ -174,7 +174,7 @@ class PHPTelebot
     {
         $offset = 0;
         while (true) {
-            $req = json_decode(Bot::send('getUpdates', ['offset' => $offset, 'timeout' => 30]), true);
+            $req = json_decode(Bot::send('getUpdates', array('offset' => $offset, 'timeout' => 30)), true);
 
             // Check error.
             if (isset($req['error_code'])) {
@@ -236,7 +236,7 @@ class PHPTelebot
                 if ($get['message']['text'] != '*' && preg_match($regex, $get['message']['text'], $matches)) {
                     $run = true;
                     if ($customRegex) {
-                        $param = [$matches];
+                        $param = array($matches);
                     } else {
                         $param = isset($matches[1]) ? $matches[1] : '';
                     }
@@ -282,14 +282,14 @@ class PHPTelebot
                     if ($count > 1) {
                         $param = array_pad(explode(' ', $param, $count), $count, '');
                     } else {
-                        $param = [$param];
+                        $param = array($param);
                     }
                 }
 
                 return call_user_func_array($call, $param);
             } else {
                 if (!isset($get['inline_query'])) {
-                    return Bot::send('sendMessage', ['text' => $call]);
+                    return Bot::send('sendMessage', array('text' => $call));
                 }
             }
         }
