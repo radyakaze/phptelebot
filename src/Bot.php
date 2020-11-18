@@ -112,7 +112,7 @@ class Bot
      *
      * @return string
      */
-    public static function answerInlineQuery($results, $options = [])
+    public static function answerInlineQuery($results, $options = array())
     {
         if (!empty($options)) {
             $data = $options;
@@ -136,7 +136,7 @@ class Bot
      *
      * @return string
      */
-    public static function answerCallbackQuery($text, $options = [])
+    public static function answerCallbackQuery($text, $options = array())
     {
         $options['text'] = $text;
 
