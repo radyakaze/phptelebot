@@ -278,7 +278,8 @@ class PHPTelebot
         if ($run) {
             if (is_callable($call)) {
                 if (!is_array($param)) {
-                    $count = count((new ReflectionFunction($call))->getParameters());
+                    $obj = new ReflectionFunction($call);
+                    $count = count($obj->getParameters());
                     if ($count > 1) {
                         $param = array_pad(explode(' ', $param, $count), $count, '');
                     } else {
