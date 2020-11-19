@@ -63,8 +63,8 @@ class PHPTelebot
     public function __construct($token, $username = '')
     {
         // Check php version
-        if (version_compare(phpversion(), '5.4', '<')) {
-            die("PHPTelebot needs to use PHP 5.4 or higher.\n");
+        if (version_compare(phpversion(), '5.3', '<')) {
+            die("PHPTelebot needs to use PHP 5.3 or higher.\n");
         }
 
         // Check curl
