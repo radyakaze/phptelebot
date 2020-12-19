@@ -8,7 +8,7 @@
         {"name": "Radya", "email": "radya@gmx.com"}
     ],
     "require": {
-        "php": ">=5.4",
+        "php": ">=5.3",
         "ext-curl": "*"
     },
     "autoload": {

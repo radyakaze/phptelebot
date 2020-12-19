@@ -30,10 +30,10 @@ class Bot
      *
      * @return array|bool
      */
-    public static function send($action = 'sendMessage', $data = [])
+    public static function send($action = 'sendMessage', $data = array())
     {
         $upload = false;
-        $actionUpload = ['sendPhoto', 'sendAudio', 'sendDocument', 'sendSticker', 'sendVideo', 'sendVoice'];
+        $actionUpload = array('sendPhoto', 'sendAudio', 'sendDocument', 'sendSticker', 'sendVideo', 'sendVoice');
 
         if (in_array($action, $actionUpload)) {
             $field = str_replace('send', '', strtolower($action));
@@ -44,7 +44,7 @@ class Bot
             }
         }
 
-        $needChatId = ['sendMessage', 'forwardMessage', 'sendPhoto', 'sendAudio', 'sendDocument', 'sendSticker', 'sendVideo', 'sendVoice', 'sendLocation', 'sendVenue', 'sendContact', 'sendChatAction', 'editMessageText', 'editMessageCaption', 'editMessageReplyMarkup', 'sendGame'];
+        $needChatId = array('sendMessage', 'forwardMessage', 'sendPhoto', 'sendAudio', 'sendDocument', 'sendSticker', 'sendVideo', 'sendVoice', 'sendLocation', 'sendVenue', 'sendContact', 'sendChatAction', 'editMessageText', 'editMessageCaption', 'editMessageReplyMarkup', 'sendGame');
         if (in_array($action, $needChatId) && !isset($data['chat_id'])) {
             $getUpdates = PHPTelebot::$getUpdates;
             if (isset($getUpdates['callback_query'])) {
@@ -63,20 +63,20 @@ class Bot
         }
 
         $ch = curl_init();
-        $options = [
+        $options = array(
             CURLOPT_URL => 'https://api.telegram.org/bot'.PHPTelebot::$token.'/'.$action,
             CURLOPT_POST => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_SSL_VERIFYHOST => false,
             CURLOPT_SSL_VERIFYPEER => false
-        ];
+        );
 
         if (is_array($data)) {
             $options[CURLOPT_POSTFIELDS] = $data;
         }
 
         if ($upload !== false) {
-            $options[CURLOPT_HTTPHEADER] = ['Content-Type: multipart/form-data'];
+            $options[CURLOPT_HTTPHEADER] = array('Content-Type: multipart/form-data');
         }
 
         curl_setopt_array($ch, $options);
@@ -112,7 +112,7 @@ class Bot
      *
      * @return string
      */
-    public static function answerInlineQuery($results, $options = [])
+    public static function answerInlineQuery($results, $options = array())
     {
         if (!empty($options)) {
             $data = $options;
@@ -136,7 +136,7 @@ class Bot
      *
      * @return string
      */
-    public static function answerCallbackQuery($text, $options = [])
+    public static function answerCallbackQuery($text, $options = array())
     {
         $options['text'] = $text;
 
@@ -188,7 +188,7 @@ class Bot
         } elseif (isset($get['edited_channel_post'])) {
             return $get['edited_channel_post'];
         } else {
-            return [];
+            return array();
         }
     }
 
@@ -266,8 +266,8 @@ class Bot
      */
     public static function __callStatic($action, $args)
     {
-        $param = [];
-        $firstParam = [
+        $param = array();
+        $firstParam = array(
             'sendMessage' => 'text',
             'sendPhoto' => 'photo',
             'sendVideo' => 'video',
@@ -286,7 +286,7 @@ class Bot
             'getChatMembersCount' => 'chat_id',
             'sendGame' => 'game_short_name',
             'getGameHighScores' => 'user_id',
-        ];
+        );
 
         if (!isset($firstParam[$action])) {
             if (isset($args[0]) && is_array($args[0])) {
@@ -299,6 +299,6 @@ class Bot
             }
         }
 
-        return call_user_func_array('self::send', [$action, $param]);
+        return call_user_func_array('self::send', array($action, $param));
     }
 }
